@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجر شحن الألعاب الرقمي</title>
+    <!-- استدعاء السكربت الرسمي المخصص لتشغيل واجهات الـ Mini Apps داخل تليجرام بدقة -->
+    <script src="https://telegram.org"></script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; padding: 15px; margin: 0; text-align: center; color: #333; }
+        .container { max-width: 400px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .input-group { margin-bottom: 15px; text-align: right; }
+        label { font-weight: bold; display: block; margin-bottom: 5px; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 16px; }
+        .product-card { border: 1px solid #e0e0e0; padding: 15px; border-radius: 8px; margin-top: 15px; background: #fafafa; }
+        .btn-submit { background-color: #2481cc; color: white; border: none; padding: 12px; width: 100%; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; transition: background 0.3s; }
+        .btn-submit:hover { background-color: #1a639b; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🚀 متجر الشحن السريع</h2>
+    <p>أدخل بياناتك واختر الخدمة لإرسال طلب الدفع المباشر</p>
+
+    <!-- حقل إدخال الآيدي الخاص باللاعب -->
+    <div class="input-group">
+        <label for="playerId">معرّف اللاعب (Player ID):</label>
+        <input type="number" id="playerId" placeholder="أدخل الـ ID الخاص بك هنا" required>
+    </div>
+
+    <!-- قائمة الخدمات المتاحة داخل المتجر -->
+    <div class="input-group">
+        <label for="serviceSelect">اختر باقة الشحن:</label>
+        <select id="serviceSelect">
+            <option value="150|1.99">ببجي موبايل - 60 شدة (\$1.99)</option>
+            <option value="151|4.99">ببجي موبايل - 325 شدة (\$4.99)</option>
+            <option value="201|1.20">فري فاير - 100 جوهرة (\$1.20)</option>
+            <option value="202|3.50">فري فاير - 310 جوهرة (\$3.50)</option>
+        </select>
+    </div>
+
+    <div class="product-card">
+        <button class="btn-submit" id="btnBuy">📦 تأكيد الطلب والانتقال للدفع</button>
+    </div>
+</div>
+
+<script>
+    // تهيئة وتوسيع واجهة تليجرام المصغرة بكامل حجم شاشة الهاتف
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+    tg.expand();
+
+    // التقاط حدث الضغط على الزر وإرسال البيانات المجمعة لبوت البايثون
+    document.getElementById('btnBuy').addEventListener('click', () => {
+        const playerId = document.getElementById('playerId').value.trim();
+        const serviceData = document.getElementById('serviceSelect').value;
+
+        if (!playerId) {
+            tg.showAlert('الرجاء إدخال معرّف اللاعب (ID) أولاً!');
+            return;
+        }
+
+        const [serviceId, price] = serviceData.split('|');
+        const dataToSend = `${playerId}|${serviceId}|${price}`;
+
+        // إرسال النص المشفر وإغلاق نافذة المتجر تلقائياً
+        tg.sendData(dataToSend);
+        tg.close();
+    });
+</script>
+
+</body>
+</html>
