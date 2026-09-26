@@ -57,15 +57,11 @@
         const serviceData = document.getElementById('serviceSelect').value;
 
         if (!playerId) {
-            // استخدام تنبيه تليجرام المدمج بدلاً من alert المتصفح المزعجة
             tg.showAlert('الرجاء إدخال معرّف اللاعب (ID) أولاً!');
             return;
         }
 
         const [serviceId, price] = serviceData.split('|');
-        
-        // تجهيز البيانات النصية التي ستصل إلى البوت بالبايثون
-        // النتيجة ستكون مثل: "12345678|150|1.99"
         const dataToSend = `${playerId}|${serviceId}|${price}`;
 
         // إرسال البيانات وإغلاق المتجر تلقائياً
