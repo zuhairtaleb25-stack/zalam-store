@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>متجر شحن الألعاب الرقمي</title>
-    <!-- تم الإصلاح: استدعاء ملف الـ JavaScript الرسمي والمدعوم للـ Mini Apps -->
+    <!-- تم الإصلاح: استدعاء ملف الـ JavaScript المخصص والمطلوب للـ Mini Apps -->
     <script src="https://telegram.org"></script>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; padding: 15px; margin: 0; text-align: center; color: #333; }
@@ -64,7 +64,7 @@
         const [serviceId, price] = serviceData.split('|');
         const dataToSend = `${playerId}|${serviceId}|${price}`;
 
-        // إرسال البيانات وإغلاق المتجر تلقائياً
+        // إرسال البيانات المجمعة للبوت بنجاح وإغلاق النافذة
         tg.sendData(dataToSend);
         tg.close();
     });
