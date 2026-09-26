@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>متجر شحن الألعاب الرقمي</title>
-    <!-- الإصلاح هنا: استدعاء السكربت البرمي الرسمي لتليجرام Mini App بالشكل الصحيح -->
+    <!-- تم الإصلاح: استدعاء ملف الـ JavaScript الرسمي والمدعوم للـ Mini Apps -->
     <script src="https://telegram.org"></script>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; padding: 15px; margin: 0; text-align: center; color: #333; }
@@ -13,7 +13,6 @@
         label { font-weight: bold; display: block; margin-bottom: 5px; }
         input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 16px; }
         .product-card { border: 1px solid #e0e0e0; padding: 15px; border-radius: 8px; margin-top: 15px; background: #fafafa; }
-        .price { color: #e74c3c; font-size: 18px; font-weight: bold; margin: 10px 0; }
         .btn-submit { background-color: #2481cc; color: white; border: none; padding: 12px; width: 100%; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; transition: background 0.3s; }
         .btn-submit:hover { background-color: #1a639b; }
     </style>
@@ -47,23 +46,29 @@
 </div>
 
 <script>
-    // تهيئة واجهة التليجرام Mini App وتوسيعها
+    // تهيئة وتوسيع واجهة التليجرام Mini App بكامل حجم الشاشة
     const tg = window.Telegram.WebApp;
+    tg.ready();
     tg.expand();
 
+    // تشغيل منطق إرسال البيانات عند الضغط على الزر الأزرق
     document.getElementById('btnBuy').addEventListener('click', () => {
         const playerId = document.getElementById('playerId').value.trim();
         const serviceData = document.getElementById('serviceSelect').value;
 
         if (!playerId) {
-            alert('الرجاء إدخال معرّف اللاعب (ID) أولاً!');
+            // استخدام تنبيه تليجرام المدمج بدلاً من alert المتصفح المزعجة
+            tg.showAlert('الرجاء إدخال معرّف اللاعب (ID) أولاً!');
             return;
         }
 
         const [serviceId, price] = serviceData.split('|');
+        
+        // تجهيز البيانات النصية التي ستصل إلى البوت بالبايثون
+        // النتيجة ستكون مثل: "12345678|150|1.99"
         const dataToSend = `${playerId}|${serviceId}|${price}`;
 
-        // إرسال البيانات المجمعة للبوت بنجاح وإغلاق النافذة
+        // إرسال البيانات وإغلاق المتجر تلقائياً
         tg.sendData(dataToSend);
         tg.close();
     });
