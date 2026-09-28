@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجر شحن جواهر فري فاير</title>
-    <!-- استدعاء السكربت الرسمي المخصص لتشغيل واجهات الـ Mini Apps داخل تليجرام بدقة -->
+    <title>متجر شحن جواهر free fire</title>
     <script src="https://telegram.org"></script>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; padding: 15px; margin: 0; text-align: center; color: #333; }
@@ -12,62 +11,56 @@
         .input-group { margin-bottom: 15px; text-align: right; }
         label { font-weight: bold; display: block; margin-bottom: 5px; }
         input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 16px; }
-        .product-card { border: 1px solid #e0e0e0; padding: 15px; border-radius: 8px; margin-top: 15px; background: #fafafa; }
         .btn-submit { background-color: #e74c3c; color: white; border: none; padding: 12px; width: 100%; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; transition: background 0.3s; }
-        .btn-submit:hover { background-color: #c0392b; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <h2>💎 متجر شحن فري فاير المباشر</h2>
-    <p>أدخل بياناتك واختر باقة الجواهر لإرسال طلب الدفع</p>
+    <p>أدخل بياناتك واختر باقة الجواهر لإتمام الطلب</p>
 
-    <!-- حقل إدخال الآي دي (Player ID) الخاص باللاعب -->
     <div class="input-group">
         <label for="playerId">معرّف اللاعب (Player ID):</label>
         <input type="number" id="playerId" placeholder="أدخل الـ ID الخاص بك هنا" required>
     </div>
 
-    <!-- قائمة باقات فري فاير الرسمية بالدولار التي تم اعتمادها -->
     <div class="input-group">
         <label for="serviceSelect">اختر باقة الجواهر:</label>
         <select id="serviceSelect">
-            <option value="FF110|1.20">💎 110 جوهرة (\$1.20)</option>
-            <option value="FF231|2.40">💎 231 جوهرة (\$2.40)</option>
-            <option value="FF583|5.50">💎 583 جوهرة (\$5.50)</option>
-            <option value="FF1188|10.90">💎 1188 جوهرة (\$10.90)</option>
-            <option value="FF2420|21.50">💎 2420 جوهرة (\$21.50)</option>
+            <option value="110 جوهرة بسعر \$1.20">💎 110 جوهرة (\$1.20)</option>
+            <option value="231 جوهرة بسعر \$2.40">💎 231 جوهرة (\$2.40)</option>
+            <option value="583 جوهرة بسعر \$5.50">💎 583 جوهرة (\$5.50)</option>
+            <option value="1188 جوهرة بسعر \$10.90">💎 1188 جوهرة (\$10.90)</option>
+            <option value="2420 جوهرة بسعر \$21.50">💎 2420 جوهرة (\$21.50)</option>
         </select>
     </div>
 
-    <div class="product-card">
-        <button class="btn-submit" id="btnBuy">📦 تأكيد الطلب والانتقال للدفع</button>
-    </div>
+    <button class="btn-submit" id="btnBuy">📦 تأكيد الطلب والانتقال للدفع</button>
 </div>
 
 <script>
-    // تهيئة وتوسيع واجهة تليجرام المصغرة بكامل حجم شاشة الهاتف
     const tg = window.Telegram.WebApp;
     tg.ready();
     tg.expand();
 
-    // التقاط حدث الضغط على الزر وإرسال البيانات المجمعة لبوت البايثون
     document.getElementById('btnBuy').addEventListener('click', () => {
         const playerId = document.getElementById('playerId').value.trim();
-        const serviceData = document.getElementById('serviceSelect').value;
+        const serviceText = document.getElementById('serviceSelect').value;
 
         if (!playerId) {
             tg.showAlert('الرجاء إدخال معرّف اللاعب (ID) أولاً!');
             return;
         }
 
-        const [serviceId, price] = serviceData.split('|');
-        const dataToSend = `${playerId}|${serviceId}|${price}`;
-
-        // إرسال النص المشفر وإغلاق نافذة المتجر تلقائياً
-        tg.sendData(dataToSend);
-        tg.close();
+        // إظهار صندوق منبثق رسمي وجميل للزبون يؤكد طلبه ويوجهه للدفع
+        tg.showPopup({
+            title: '🧾 طلب شحن قيد الانتظار',
+            message: `معرّف اللاعب: ${playerId}\nالباقة: ${serviceText}\n\nيرجى تحويل القيمة عبر حساب الكاش الخاص بنا، ثم أرسل لقطة الشاشة في المحادثة لتأكيد شحن حسابك الحقيقي فوراً!`,
+            buttons: [{id: 'ok', type: 'default', text: 'حسناً، الانتقال للدفع'}]
+        }, (buttonId) => {
+            tg.close(); // إغلاق المتجر تلقائياً بعد الضغط
+        });
     });
 </script>
 
