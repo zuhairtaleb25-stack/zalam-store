@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجر شحن الألعاب الرقمي</title>
+    <title>متجر شحن جواهر فري فاير</title>
     <!-- استدعاء السكربت الرسمي المخصص لتشغيل واجهات الـ Mini Apps داخل تليجرام بدقة -->
     <script src="https://telegram.org"></script>
     <style>
@@ -13,30 +13,31 @@
         label { font-weight: bold; display: block; margin-bottom: 5px; }
         input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 16px; }
         .product-card { border: 1px solid #e0e0e0; padding: 15px; border-radius: 8px; margin-top: 15px; background: #fafafa; }
-        .btn-submit { background-color: #2481cc; color: white; border: none; padding: 12px; width: 100%; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; transition: background 0.3s; }
-        .btn-submit:hover { background-color: #1a639b; }
+        .btn-submit { background-color: #e74c3c; color: white; border: none; padding: 12px; width: 100%; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; transition: background 0.3s; }
+        .btn-submit:hover { background-color: #c0392b; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>🚀 متجر الشحن السريع</h2>
-    <p>أدخل بياناتك واختر الخدمة لإرسال طلب الدفع المباشر</p>
+    <h2>💎 متجر شحن فري فاير المباشر</h2>
+    <p>أدخل بياناتك واختر باقة الجواهر لإرسال طلب الدفع</p>
 
-    <!-- حقل إدخال الآيدي الخاص باللاعب -->
+    <!-- حقل إدخال الآي دي (Player ID) الخاص باللاعب -->
     <div class="input-group">
         <label for="playerId">معرّف اللاعب (Player ID):</label>
         <input type="number" id="playerId" placeholder="أدخل الـ ID الخاص بك هنا" required>
     </div>
 
-    <!-- قائمة الخدمات المتاحة داخل المتجر -->
+    <!-- قائمة باقات فري فاير الرسمية بالدولار التي تم اعتمادها -->
     <div class="input-group">
-        <label for="serviceSelect">اختر باقة الشحن:</label>
+        <label for="serviceSelect">اختر باقة الجواهر:</label>
         <select id="serviceSelect">
-            <option value="150|1.99">ببجي موبايل - 60 شدة (\$1.99)</option>
-            <option value="151|4.99">ببجي موبايل - 325 شدة (\$4.99)</option>
-            <option value="201|1.20">فري فاير - 100 جوهرة (\$1.20)</option>
-            <option value="202|3.50">فري فاير - 310 جوهرة (\$3.50)</option>
+            <option value="FF110|1.20">💎 110 جوهرة (\$1.20)</option>
+            <option value="FF231|2.40">💎 231 جوهرة (\$2.40)</option>
+            <option value="FF583|5.50">💎 583 جوهرة (\$5.50)</option>
+            <option value="FF1188|10.90">💎 1188 جوهرة (\$10.90)</option>
+            <option value="FF2420|21.50">💎 2420 جوهرة (\$21.50)</option>
         </select>
     </div>
 
