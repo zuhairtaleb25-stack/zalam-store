@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجر شحن جواهر free fire</title>
+    <title>متجر شحن جواهر فري فاير</title>
+    <!-- استدعاء السكربت الرسمي لتشغيل واجهة تليجرام بدقة متناهية وبدون سيرفر بايثون -->
     <script src="https://telegram.org"></script>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; padding: 15px; margin: 0; text-align: center; color: #333; }
@@ -12,27 +13,30 @@
         label { font-weight: bold; display: block; margin-bottom: 5px; }
         input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 16px; }
         .btn-submit { background-color: #e74c3c; color: white; border: none; padding: 12px; width: 100%; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; transition: background 0.3s; }
+        .btn-submit:hover { background-color: #c0392b; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <h2>💎 متجر شحن فري فاير المباشر</h2>
-    <p>أدخل بياناتك واختر باقة الجواهر لإتمام الطلب</p>
+    <p>أدخل بياناتك واختر باقة الجواهر لإرسال طلب الدفع</p>
 
+    <!-- حقل إدخال الآي دي المخصص للاعب -->
     <div class="input-group">
         <label for="playerId">معرّف اللاعب (Player ID):</label>
         <input type="number" id="playerId" placeholder="أدخل الـ ID الخاص بك هنا" required>
     </div>
 
+    <!-- قائمة باقات فري فاير المعتمدة بالدولار -->
     <div class="input-group">
         <label for="serviceSelect">اختر باقة الجواهر:</label>
         <select id="serviceSelect">
-            <option value="110 جوهرة بسعر \$1.20">💎 110 جوهرة (\$1.20)</option>
-            <option value="231 جوهرة بسعر \$2.40">💎 231 جوهرة (\$2.40)</option>
-            <option value="583 جوهرة بسعر \$5.50">💎 583 جوهرة (\$5.50)</option>
-            <option value="1188 جوهرة بسعر \$10.90">💎 1188 جوهرة (\$10.90)</option>
-            <option value="2420 جوهرة بسعر \$21.50">💎 2420 جوهرة (\$21.50)</option>
+            <option value="💎 110 جوهرة بسعر 1.20\$ 🟢">💎 110 جوهرة (\$1.20)</option>
+            <option value="💎 231 جوهرة بسعر 2.40\$ 🟢">💎 231 جوهرة (\$2.40)</option>
+            <option value="💎 583 جوهرة بسعر 5.50\$ 🟢">💎 583 جوهرة (\$5.50)</option>
+            <option value="💎 1188 جوهرة بسعر 10.90\$ 🟢">💎 1188 جوهرة (\$10.90)</option>
+            <option value="💎 2420 جوهرة بسعر 21.50\$ 🟢">💎 2420 جوهرة (\$21.50)</option>
         </select>
     </div>
 
@@ -40,6 +44,7 @@
 </div>
 
 <script>
+    // تهيئة وتوسيع واجهة المتجر بكامل حجم شاشة هاتف الزبون
     const tg = window.Telegram.WebApp;
     tg.ready();
     tg.expand();
@@ -53,14 +58,12 @@
             return;
         }
 
-        // إظهار صندوق منبثق رسمي وجميل للزبون يؤكد طلبه ويوجهه للدفع
-        tg.showPopup({
-            title: '🧾 طلب شحن قيد الانتظار',
-            message: `معرّف اللاعب: ${playerId}\nالباقة: ${serviceText}\n\nيرجى تحويل القيمة عبر حساب الكاش الخاص بنا، ثم أرسل لقطة الشاشة في المحادثة لتأكيد شحن حسابك الحقيقي فوراً!`,
-            buttons: [{id: 'ok', type: 'default', text: 'حسناً، الانتقال للدفع'}]
-        }, (buttonId) => {
-            tg.close(); // إغلاق المتجر تلقائياً بعد الضغط
-        });
+        // صياغة نص الفاتورة المباشرة التي سترسل وتظهر في شات البوت فوراً
+        const dataToSend = `🧾 *فاتورة طلب شحن جديدة قيد الانتظار*\n───────────────────\n🆔 *معرّف اللاعب (ID):* \`\${playerId}\`\n📦 *الباقة المطلوبة:* \`\${serviceText}\`\n───────────────────\n⚠️ *الخطوة الأخيرة لإتمام الشحن:*\nيرجى تحويل القيمة المطلوبة إلى حساب الكاش الخاص بنا، ثم أرسل لقطة شاشة لإثبات التحويل هنا في الشات ليتم الشحن فوراً! 💸`;
+
+        // إرسال البيانات وإغلاق المتجر تلقائياً
+        tg.sendData(dataToSend);
+        tg.close();
     });
 </script>
 
