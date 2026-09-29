@@ -38,9 +38,9 @@
 
     <button class="btn-submit" onclick="generateInvoice()">📦 تأكيد الطلب وعرض الفاتورة</button>
 
-    <!-- صندوق عرض الفاتورة الفوري لكسر أي حظر تلقائي من تليجرام -->
+    <!-- صندوق عرض الفاتورة الفوري ببيانات حسابك المشفر الجديد -->
     <div id="invoiceBox" class="invoice-box">
-        <h3 style="text-align:center; margin-top:0; color: #e74c3c;">🧾 فاتورة الدفع الفورية</h3>
+        <h3 style="text-align:center; margin-top:0; color: #e74c3c;">🧾 فاتورة الدفع الرسمية</h3>
         <p id="invoiceDetails"></p>
         <hr>
         <p style="color:#c0392b; font-weight:bold; text-align:center; font-size: 13px;">يرجى تصوير الشاشة (أو نسخ البيانات) وإرسالها في محادثة البوت لتأكيد طلبك وتفعيل الشحن فوراً!</p>
@@ -57,12 +57,12 @@
             return;
         }
 
-        // عرض تفاصيل الفاتورة الفورية للمستخدم داخل شاشة المتجر لتفادي التعليق
+        // تم تثبيت حسابك المالي المعتمد بنجاح كامل لمنع الأخطاء التقليدية
         document.getElementById('invoiceDetails').innerHTML = 
             "🆔 <b>معرّف اللاعب (ID):</b> " + id + "<br>" +
             "📦 <b>الباقة المطلوبة:</b> " + packageText + "<br>" +
             "💳 <b>حساب الكاش لاستلام الأرباح:</b><br>" +
-            "👉 <code>ضع_رقم_حسابك_الحقيقي_هنا</code>";
+            "👉 <code>94046e6860d4ba8897e918b5e9fed55e</code>";
             
         document.getElementById('invoiceBox').style.display = 'block';
     }
