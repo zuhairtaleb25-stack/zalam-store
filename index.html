@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>متجر شحن جواهر فري فاير</title>
-    <!-- استدعاء السكربت الرسمي لتشغيل واجهة تليجرام بدقة متناهية وبدون سيرفر بايثون -->
     <script src="https://telegram.org"></script>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; padding: 15px; margin: 0; text-align: center; color: #333; }
@@ -12,8 +11,9 @@
         .input-group { margin-bottom: 15px; text-align: right; }
         label { font-weight: bold; display: block; margin-bottom: 5px; }
         input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 16px; }
-        .btn-submit { background-color: #e74c3c; color: white; border: none; padding: 12px; width: 100%; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; transition: background 0.3s; }
+        .btn-submit { background-color: #e74c3c; color: white; border: none; padding: 12px; width: 100%; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; transition: background 0.3s; margin-top: 10px; }
         .btn-submit:hover { background-color: #c0392b; }
+        .invoice-box { display: none; background: #fff3cd; border: 1px solid #ffeeba; padding: 15px; border-radius: 8px; margin-top: 15px; text-align: right; font-size: 14px; }
     </style>
 </head>
 <body>
@@ -22,13 +22,11 @@
     <h2>💎 متجر شحن فري فاير المباشر</h2>
     <p>أدخل بياناتك واختر باقة الجواهر لإرسال طلب الدفع</p>
 
-    <!-- حقل إدخال الآي دي المخصص للاعب -->
     <div class="input-group">
         <label for="playerId">معرّف اللاعب (Player ID):</label>
         <input type="number" id="playerId" placeholder="أدخل الـ ID الخاص بك هنا" required>
     </div>
 
-    <!-- قائمة باقات فري فاير المعتمدة بالدولار -->
     <div class="input-group">
         <label for="serviceSelect">اختر باقة الجواهر:</label>
         <select id="serviceSelect">
@@ -40,11 +38,19 @@
         </select>
     </div>
 
-    <button class="btn-submit" id="btnBuy">📦 تأكيد الطلب والانتقال للدفع</button>
+    <button class="btn-submit" id="btnBuy">📦 تأكيد الطلب وعرض الفاتورة</button>
+
+    <!-- صندوق عرض الفاتورة الفوري لتخطي حظر تليجرام -->
+    <div id="invoiceBox" class="invoice-box">
+        <h3 style="text-align:center; margin-top:0;">🧾 فاتورة الدفع الفورية</h3>
+        <p id="invoiceDetails"></p>
+        <hr>
+        <p style="color:#c0392b; font-weight:bold; text-align:center;">يرجى نسخ تفاصيل الفاتورة أعلاه وإرسالها في الشات للبوت مع صورة التحويل لإتمام الشحن فوراً!</p>
+        <button class="btn-submit" style="background-color:#2ecc71;" id="btnClose">닫기 إغلاق المتجر والتحويل للتحويل</button>
+    </div>
 </div>
 
 <script>
-    // تهيئة وتوسيع واجهة المتجر بكامل حجم شاشة هاتف الزبون
     const tg = window.Telegram.WebApp;
     tg.ready();
     tg.expand();
@@ -58,12 +64,15 @@
             return;
         }
 
-        // صياغة نص الفاتورة المباشرة التي سترسل وتظهر في شات البوت فوراً
-        const dataToSend = `🧾 *فاتورة طلب شحن جديدة قيد الانتظار*\n───────────────────\n🆔 *معرّف اللاعب (ID):* \`\${playerId}\`\n📦 *الباقة المطلوبة:* \`\${serviceText}\`\n───────────────────\n⚠️ *الخطوة الأخيرة لإتمام الشحن:*\nيرجى تحويل القيمة المطلوبة إلى حساب الكاش الخاص بنا، ثم أرسل لقطة شاشة لإثبات التحويل هنا في الشات ليتم الشحن فوراً! 💸`;
+        // عرض تفاصيل الفاتورة مباشرة للزبون بداخل شاشة المتجر لتجنب الحظر التقني
+        const invoiceDetails = `🆔 <b>معرّف اللاعب (ID):</b> ${playerId}<br>📦 <b>الباقة المطلوبة:</b> ${serviceText}<br>💳 <b>حساب الكاش لتحويل الأموال:</b> <br>👉 <code>07xxxxxxxx</code> (زين كاش / فودافون كاش)`;
+        
+        document.getElementById('invoiceDetails').innerHTML = invoiceDetails;
+        document.getElementById('invoiceBox').style.display = 'block';
+    });
 
-        // إرسال البيانات وإغلاق المتجر تلقائياً
-        tg.sendData(dataToSend);
-        tg.close();
+    document.getElementById('btnClose').addEventListener('click', () => {
+        tg.close(); // إغلاق المتجر بعد رؤية العميل للفاتورة
     });
 </script>
 
