@@ -34,14 +34,14 @@
         <select id="serviceSelect">
             <!-- 👑 قسم جواهر فري فاير -->
             <optgroup label="🔥 جواهر فري فاير (Free Fire)">
-                <option value="💎 110 جوهرة فري فاير بسعر 1.50$ 🟢">💎 110 جوهرة ($1.50)</option>
-                <option value="💎 231 جوهرة فري فاير بسعر 2.80$ 🟢">💎 231 جوهرة ($2.80)</option>
-                <option value="💎 583 جوهرة فري فاير بسعر 6.00$ 🟢">💎 583 جوهرة ($6.00)</option>
-                <option value="💎 1188 جوهرة فري فاير بسعر 11.50$ 🟢">💎 1188 جوهرة ($11.50)</option>
-                <option value="💎 2420 جوهرة فري فاير بسعر 22.00$ 🟢">💎 2420 جوهرة ($22.00)</option>
+                <option value="💎 110 جواهر فري فاير بسعر 1.50$ 🟢">💎 110 جوهرة ($1.50)</option>
+                <option value="💎 231 جواهر فري فاير بسعر 2.80$ 🟢">💎 231 جوهرة ($2.80)</option>
+                <option value="💎 583 جواهر فري فاير بسعر 6.00$ 🟢">💎 583 جوهرة ($6.00)</option>
+                <option value="💎 1188 جواهر فري فاير بسعر 11.50$ 🟢">💎 1188 جوهرة ($11.50)</option>
+                <option value="💎 2420 جواهر فري فاير بسعر 22.00$ 🟢">💎 2420 جوهرة ($22.00)</option>
             </optgroup>
             
-            <!-- 👑 قسم شدات ببجي موبايل المضافة حديثاً -->
+            <!-- 👑 قسم شدات ببجي موبايل -->
             <optgroup label="🎯 شدات ببجي موبايل (PUBG UC)">
                 <option value="🪙 60 شدة ببجي UC بسعر 1.30$ 🟢">🪙 60 شدة UC ($1.30)</option>
                 <option value="🪙 325 شدة ببجي UC بسعر 5.20$ 🟢">🪙 325 شدة UC ($5.20)</option>
@@ -93,20 +93,17 @@
         document.getElementById('invoiceBox').style.display = 'block';
     }
 
+    // دالة نسخ تعمل ذاتياً وتلقائياً على المتصفحات وتليجرام مباشرة
     function copyInvoiceText() {
         if (!textToCopy) return;
         
-        navigator.clipboard.writeText(textToCopy).then(function() {
-            alert("✅ تم نسخ تفاصيل الفاتورة بنجاح! الصقها الآن في شات البوت وأرسلها مع صورة التحويل.");
-        }).catch(function(err) {
-            var dummy = document.createElement("textarea");
-            document.body.appendChild(dummy);
-            dummy.value = textToCopy;
-            dummy.select();
-            document.execCommand("copy");
-            document.body.removeChild(dummy);
-            alert("✅ تم نسخ تفاصيل الفاتورة بنجاح! الصقها الآن في شات البوت وأرسلها مع صورة التحويل.");
-        });
+        var dummy = document.createElement("textarea");
+        document.body.appendChild(dummy);
+        dummy.value = textToCopy;
+        dummy.select();
+        document.execCommand("copy");
+        document.body.removeChild(dummy);
+        alert("✅ تم نسخ تفاصيل الفاتورة بنجاح! الصقها الآن في شات البوت وأرسلها مع صورة التحويل.");
     }
 </script>
 
