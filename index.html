@@ -29,7 +29,7 @@
         <label for="playerId">معرّف اللاعب الحقيقي (Player ID):</label>
         <input type="number" id="playerId" placeholder="أدخل الـ ID الخاص باللعبة هنا" required>
         
-        <!-- زر الفحص الذكي المزدوج -->
+        <!-- زر الفحص الذكي المزدوج بالموقع البديل المستقر -->
         <button class="btn-check" onclick="checkPlayerNickname()">🔍 فحص والتحقق من اسم الحساب (Nickname)</button>
     </div>
 
@@ -72,7 +72,6 @@
 <script>
     var textToCopy = ""; 
 
-    // دالة الفحص الذكي المزدوجة التي تفرق تلقائياً بين ببجي وفري فاير بطلبك المطور
     function checkPlayerNickname() {
         var id = document.getElementById('playerId').value.trim();
         var selectedPackage = document.getElementById('serviceSelect').value;
@@ -82,12 +81,11 @@
             return;
         }
 
-        // إذا كانت الباقة المحددة تحتوي على كلمة ببجي أو شدة، يحوله لموقع فحص ببجي
+        // تم استبدال الموقع المعطل بـScrims المضمون والنشط عالمياً لببجي
         if (selectedPackage.includes("ببجي") || selectedPackage.includes("شدة") || selectedPackage.includes("UC")) {
-            var pubgUrl = "https://pubgchecker.com"; // موقع عالمي لفحص آيدي ببجي موبايل وعرض الاسم بعينه
+            var pubgUrl = "https://scrims.me"; 
             window.open(pubgUrl, '_blank');
         } else {
-            // غير ذلك يحوله تلقائياً لموقع فحص فري فاير المعتمد
             var ffUrl = "https://redxgame.com";
             window.open(ffUrl, '_blank');
         }
@@ -118,6 +116,7 @@
         document.getElementById('invoiceBox').style.display = 'block';
     }
 
+    document.execCommand
     function copyInvoiceText() {
         if (!textToCopy) return;
         
