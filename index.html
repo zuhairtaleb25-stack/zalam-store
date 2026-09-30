@@ -29,13 +29,14 @@
         <label for="playerId">معرّف اللاعب الحقيقي (Player ID):</label>
         <input type="number" id="playerId" placeholder="أدخل الـ ID الخاص باللعبة هنا" required>
         
-        <!-- زر التحقق والتأكد السحري المضاف حديثاً بطلبك -->
+        <!-- زر الفحص الذكي المزدوج -->
         <button class="btn-check" onclick="checkPlayerNickname()">🔍 فحص والتحقق من اسم الحساب (Nickname)</button>
     </div>
 
     <div class="input-group">
         <label for="serviceSelect">اختر باقة الشحن الرقمية:</label>
         <select id="serviceSelect">
+            <!-- 👑 قسم جواهر فري فاير -->
             <optgroup label="🔥 جواهر فري فاير (Free Fire)">
                 <option value="💎 110 جواهر فري فاير بسعر 1.50$ 🟢">💎 110 جوهرة ($1.50)</option>
                 <option value="💎 231 جواهر فري فاير بسعر 2.80$ 🟢">💎 231 جوهرة ($2.80)</option>
@@ -43,6 +44,8 @@
                 <option value="💎 1188 جواهر فري فاير بسعر 11.50$ 🟢">💎 1188 جوهرة ($11.50)</option>
                 <option value="💎 2420 جواهر فري فاير بسعر 22.00$ 🟢">💎 2420 جوهرة ($22.00)</option>
             </optgroup>
+            
+            <!-- 👑 قسم شدات ببجي موبايل -->
             <optgroup label="🎯 شدات ببجي موبايل (PUBG UC)">
                 <option value="🪙 60 شدة ببجي UC بسعر 1.30$ 🟢">🪙 60 شدة UC ($1.30)</option>
                 <option value="🪙 325 شدة ببجي UC بسعر 5.20$ 🟢">🪙 325 شدة UC ($5.20)</option>
@@ -69,16 +72,25 @@
 <script>
     var textToCopy = ""; 
 
-    // دالة فحص اسم الأيدي المفتوحة خارجياً لحماية متجرك وتأكيد الاسم
+    // دالة الفحص الذكي المزدوجة التي تفرق تلقائياً بين ببجي وفري فاير بطلبك المطور
     function checkPlayerNickname() {
         var id = document.getElementById('playerId').value.trim();
+        var selectedPackage = document.getElementById('serviceSelect').value;
+
         if (!id) {
             alert('الرجاء إدخال معرّف اللاعب (ID) أولاً ليتم فصحه!');
             return;
         }
-        // تحويل المستخدم لأقوى موقع فحص معتمد عالمياً وعرض الاسم فوراً
-        var checkUrl = "https://redxgame.com/tools/free-fire-id-checker";
-        window.open(checkUrl, '_blank');
+
+        // إذا كانت الباقة المحددة تحتوي على كلمة ببجي أو شدة، يحوله لموقع فحص ببجي
+        if (selectedPackage.includes("ببجي") || selectedPackage.includes("شدة") || selectedPackage.includes("UC")) {
+            var pubgUrl = "https://pubgchecker.com"; // موقع عالمي لفحص آيدي ببجي موبايل وعرض الاسم بعينه
+            window.open(pubgUrl, '_blank');
+        } else {
+            // غير ذلك يحوله تلقائياً لموقع فحص فري فاير المعتمد
+            var ffUrl = "https://redxgame.com";
+            window.open(ffUrl, '_blank');
+        }
     }
 
     function generateInvoice() {
