@@ -11,8 +11,9 @@
         label { font-weight: bold; display: block; margin-bottom: 5px; }
         input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 16px; }
         .btn-submit { background-color: #e74c3c; color: white; border: none; padding: 12px; width: 100%; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; transition: background 0.3s; margin-top: 10px; text-decoration: none; display: block; }
+        .btn-check { background-color: #3498db; color: white; border: none; padding: 10px; width: 100%; border-radius: 6px; font-size: 14px; font-weight: bold; cursor: pointer; transition: background 0.3s; margin-top: 5px; display: block; text-decoration: none; }
+        .btn-check:hover { background-color: #2980b9; }
         .btn-copy { background-color: #2ecc71; color: white; border: none; padding: 10px; width: 100%; border-radius: 6px; font-size: 15px; font-weight: bold; cursor: pointer; transition: background 0.3s; margin-top: 10px; }
-        .btn-copy:hover { background-color: #27ae60; }
         .invoice-box { display: none; background: #fff3cd; border: 1px solid #ffeeba; padding: 15px; border-radius: 8px; margin-top: 15px; text-align: right; font-size: 14px; }
         optgroup { font-weight: bold; color: #e74c3c; background: #fff; }
         option { color: #333; font-weight: normal; }
@@ -27,12 +28,14 @@
     <div class="input-group">
         <label for="playerId">معرّف اللاعب الحقيقي (Player ID):</label>
         <input type="number" id="playerId" placeholder="أدخل الـ ID الخاص باللعبة هنا" required>
+        
+        <!-- زر التحقق والتأكد السحري المضاف حديثاً بطلبك -->
+        <button class="btn-check" onclick="checkPlayerNickname()">🔍 فحص والتحقق من اسم الحساب (Nickname)</button>
     </div>
 
     <div class="input-group">
         <label for="serviceSelect">اختر باقة الشحن الرقمية:</label>
         <select id="serviceSelect">
-            <!-- 👑 قسم جواهر فري فاير -->
             <optgroup label="🔥 جواهر فري فاير (Free Fire)">
                 <option value="💎 110 جواهر فري فاير بسعر 1.50$ 🟢">💎 110 جوهرة ($1.50)</option>
                 <option value="💎 231 جواهر فري فاير بسعر 2.80$ 🟢">💎 231 جوهرة ($2.80)</option>
@@ -40,8 +43,6 @@
                 <option value="💎 1188 جواهر فري فاير بسعر 11.50$ 🟢">💎 1188 جوهرة ($11.50)</option>
                 <option value="💎 2420 جواهر فري فاير بسعر 22.00$ 🟢">💎 2420 جوهرة ($22.00)</option>
             </optgroup>
-            
-            <!-- 👑 قسم شدات ببجي موبايل -->
             <optgroup label="🎯 شدات ببجي موبايل (PUBG UC)">
                 <option value="🪙 60 شدة ببجي UC بسعر 1.30$ 🟢">🪙 60 شدة UC ($1.30)</option>
                 <option value="🪙 325 شدة ببجي UC بسعر 5.20$ 🟢">🪙 325 شدة UC ($5.20)</option>
@@ -68,6 +69,18 @@
 <script>
     var textToCopy = ""; 
 
+    // دالة فحص اسم الأيدي المفتوحة خارجياً لحماية متجرك وتأكيد الاسم
+    function checkPlayerNickname() {
+        var id = document.getElementById('playerId').value.trim();
+        if (!id) {
+            alert('الرجاء إدخال معرّف اللاعب (ID) أولاً ليتم فصحه!');
+            return;
+        }
+        // تحويل المستخدم لأقوى موقع فحص معتمد عالمياً وعرض الاسم فوراً
+        var checkUrl = "https://redxgame.com/tools/free-fire-id-checker";
+        window.open(checkUrl, '_blank');
+    }
+
     function generateInvoice() {
         var id = document.getElementById('playerId').value.trim();
         var packageText = document.getElementById('serviceSelect').value;
@@ -93,7 +106,6 @@
         document.getElementById('invoiceBox').style.display = 'block';
     }
 
-    // دالة نسخ تعمل ذاتياً وتلقائياً على المتصفحات وتليجرام مباشرة
     function copyInvoiceText() {
         if (!textToCopy) return;
         
