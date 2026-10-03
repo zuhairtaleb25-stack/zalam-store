@@ -17,6 +17,15 @@
         .invoice-box { display: none; background: #fff3cd; border: 1px solid #ffeeba; padding: 15px; border-radius: 8px; margin-top: 15px; text-align: right; font-size: 14px; }
         optgroup { font-weight: bold; color: #e74c3c; background: #fff; }
         option { color: #333; font-weight: normal; }
+
+        /* 🔥 الكود السحري الذي يحجب ويخفي علامة Netlify تماماً من الشاشة */
+        [data-netlify-badge-text], .netlify-badge, #netlify-badge, [id*="netlify-badge"] {
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            height: 0 !important;
+            pointer-events: none !important;
+        }
     </style>
 </head>
 <body>
@@ -64,27 +73,53 @@
 
 <script>
     var textToCopy = ""; 
+    
     function checkPlayerNickname() {
         var id = document.getElementById('playerId').value.trim();
         var selectedPackage = document.getElementById('serviceSelect').value;
-        if (!id) { alert('الرجاء إدخال معرّف اللاعب (ID) أولاً ليتم فصحه!'); return; }
+
+        if (!id) {
+            alert('الرجاء إدخال معرّف اللاعب (ID) أولاً ليتم فصحه!');
+            return;
+        }
+
         if (selectedPackage.includes("ببجي") || selectedPackage.includes("شدة") || selectedPackage.includes("UC")) {
-            window.open("https://scrims.me", '_blank');
+            var pubgUrl = "https://scrims.me"; 
+            window.open(pubgUrl, '_blank');
         } else {
-            window.open("https://redxgame.com", '_blank');
+            var ffUrl = "https://redxgame.com";
+            window.open(ffUrl, '_blank');
         }
     }
+
     function generateInvoice() {
         var id = document.getElementById('playerId').value.trim();
         var packageText = document.getElementById('serviceSelect').value;
-        if (!id) { alert('الرجاء إدخال معرّف اللاعب (ID) أولاً!'); return; }
+
+        if (!id) {
+            alert('الرجاء إدخال معرّف اللاعب (ID) أولاً!');
+            return;
+        }
+
         var walletAddress = "94046e6860d4ba8897e918b5e9fed55e";
-        document.getElementById('invoiceDetails').innerHTML = "🆔 <b>معرّف اللاعب (ID):</b> " + id + "<br>📦 <b>الباقة واللعبة المطلوبة:</b> " + packageText + "<br>💳 <b>حساب استلام المدفوعات:</b><br>👉 <code>" + walletAddress + "</code>";
-        textToCopy = "🧾 فاتورة طلب شحن جديدة\n🆔 معرّف اللاعب (ID): " + id + "\n📦 اللعبة والباقة: " + packageText + "\n💳 حساب استلام الأرباح للتحويل: " + walletAddress;
+
+        document.getElementById('invoiceDetails').innerHTML = 
+            "🆔 <b>معرّف اللاعب (ID):</b> " + id + "<br>" +
+            "📦 <b>الباقة واللعبة المطلوبة:</b> " + packageText + "<br>" +
+            "💳 <b>حساب استلام المدفوعات:</b><br>" +
+            "👉 <code>" + walletAddress + "</code>";
+            
+        textToCopy = "🧾 فاتورة طلب شحن جديدة\n" +
+                     "🆔 معرّف اللاعب (ID): " + id + "\n" +
+                     "📦 اللعبة والباقة: " + packageText + "\n" +
+                     "💳 حساب استلام الأرباح للتحويل: " + walletAddress;
+
         document.getElementById('invoiceBox').style.display = 'block';
     }
+
     function copyInvoiceText() {
         if (!textToCopy) return;
+        
         var dummy = document.createElement("textarea");
         document.body.appendChild(dummy);
         dummy.value = textToCopy;
@@ -94,5 +129,6 @@
         alert("✅ تم نسخ تفاصيل الفاتورة بنجاح! الصقها الآن في شات البوت وأرسلها مع صورة التحويل.");
     }
 </script>
+
 </body>
 </html>
