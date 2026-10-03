@@ -18,11 +18,13 @@
         optgroup { font-weight: bold; color: #e74c3c; background: #fff; }
         option { color: #333; font-weight: normal; }
 
-        /* حماية إضافية عبر التصميم لحجب أي بقايا متبقية للشعار */
-        .netlify-badge, #netlify-badge, [data-netlify-badge-text], div[style*="position: fixed"][style*="bottom: 0"] {
+        /* جدار حماية إضافي عبر التصميم لحجب أي عناصر معزولة */
+        nf-badge, .netlify-badge, #netlify-badge, [data-netlify-badge-text], div[style*="position: fixed"][style*="bottom: 0"] {
             display: none !important;
             visibility: hidden !important;
             opacity: 0 !important;
+            height: 0 !important;
+            width: 0 !important;
         }
     </style>
 </head>
@@ -104,29 +106,37 @@
         alert("✅ تم نسخ تفاصيل الفاتورة بنجاح! الصقها الآن في شات البوت وأرسلها مع صورة التحويل.");
     }
 
-    /* ========================================================
-       🔥 المحرك التلقائي الجذري (JS) لملاحقة وتدمير شعار Netlify 
-       ======================================================== */
-    function destroyNetlifyBadge() {
-        // البحث عن أي عنصر يحتوي على روابط نيتلييفاي أو يحمل تصميمه الثابت والمتحرك ومسحه فوراً
-        var badges = document.querySelectorAll('.netlify-badge, #netlify-badge, [data-netlify-badge-text], div[style*="position: fixed"][style*="bottom: 0"]');
-        badges.forEach(function(badge) {
-            badge.remove();
-        });
-        
-        // مسح إضافي قاطع لأي وسم ذو حماية مرتفعة يحتوي على الشعار
-        var allDivs = document.getElementsByTagName('div');
-        for (var i = 0; i < allDivs.length; i++) {
-            if (allDivs[i].innerHTML.includes('netlify.com') || allDivs[i].innerHTML.includes('Powered by Netlify')) {
-                allDivs[i].remove();
+    /* =========================================================================
+       🔥 كود التدمير الشامل والقاطع (JS) لاختراق الـ Shadow DOM وإخفاء الشعار تماماً 
+       ========================================================================= */
+    function destroyNetlifyElements() {
+        // 1. تدمير الشعار العادي من الـ DOM الرئيسي
+        var normalBadges = document.querySelectorAll('.netlify-badge, #netlify-badge, [data-netlify-badge-text], nf-badge, div[style*="position: fixed"][style*="bottom: 0"]');
+        normalBadges.forEach(function(el) { el.remove(); });
+
+        // 2. اختراق الـ Shadow DOM المخصص من نيتلييفاي ومسح محتوياته داخلياً
+        var allElements = document.querySelectorAll('*');
+        allElements.forEach(function(el) {
+            if (el.shadowRoot) {
+                // إذا وجد الكود جدار حماية مغلق، يقوم باختراقه والبحث عن الشعار بالداخل وتدميره
+                var shadowBadges = el.shadowRoot.querySelectorAll('.netlify-badge, #netlify-badge, [data-netlify-badge-text], nf-badge, div[style*="bottom: 0"]');
+                shadowBadges.forEach(function(sb) { sb.remove(); });
+                
+                // تصفير حجم أي حاوية متبقية داخل الجدار المعزول لتموت تماماً من الشاشة
+                var innerContainer = el.shadowRoot.querySelector('div');
+                if (innerContainer && (innerContainer.innerHTML.includes('netlify') || innerContainer.innerHTML.includes('Powered by'))) {
+                    innerContainer.style.display = 'none';
+                    innerContainer.style.height = '0';
+                    innerContainer.remove();
+                }
             }
-        }
+        });
     }
-    
-    // تشغيل المحرك فوراً وتكراره كل 100 ملي ثانية لضمان حسم الطرد والمسح كلياً
-    setInterval(destroyNetlifyBadge, 100);
-    window.addEventListener('DOMContentLoaded', destroyNetlifyBadge);
-    window.addEventListener('load', destroyNetlifyBadge);
+
+    // تشغيل محرك الفحص والاختراق فورا وتكراره كل 50 ملي ثانية لضمان الطرد النهائي
+    setInterval(destroyNetlifyElements, 50);
+    window.addEventListener('DOMContentLoaded', destroyNetlifyElements);
+    window.addEventListener('load', destroyNetlifyElements);
 </script>
 
 </body>
