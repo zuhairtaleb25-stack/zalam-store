@@ -18,30 +18,11 @@
         optgroup { font-weight: bold; color: #e74c3c; background: #fff; }
         option { color: #333; font-weight: normal; }
 
-        /* =======================================================
-           🔥 الكود القاطع والجذري لإخفاء وتدمير شعار Netlify تماماً 
-           ======================================================= */
-        div[style*="position: fixed"][style*="bottom: 0"],
-        div[style*="z-index: 999999"],
-        div[style*="pointer-events: none"],
-        iframe[id*="netlify"],
-        .netlify-badge,
-        #netlify-badge,
-        [data-netlify-badge-text],
-        footer,
-        div:has(a[href*="netlify.com"]) {
+        /* حماية إضافية عبر التصميم لحجب أي بقايا متبقية للشعار */
+        .netlify-badge, #netlify-badge, [data-netlify-badge-text], div[style*="position: fixed"][style*="bottom: 0"] {
             display: none !important;
             visibility: hidden !important;
             opacity: 0 !important;
-            height: 0 !important;
-            width: 0 !important;
-            max-height: 0 !important;
-            max-width: 0 !important;
-            overflow: hidden !important;
-            position: absolute !important;
-            top: -9999px !important;
-            left: -9999px !important;
-            pointer-events: none !important;
         }
     </style>
 </head>
@@ -94,49 +75,26 @@
     function checkPlayerNickname() {
         var id = document.getElementById('playerId').value.trim();
         var selectedPackage = document.getElementById('serviceSelect').value;
-
-        if (!id) {
-            alert('الرجاء إدخال معرّف اللاعب (ID) أولاً ليتم فصحه!');
-            return;
-        }
-
+        if (!id) { alert('الرجاء إدخال معرّف اللاعب (ID) أولاً ليتم فصحه!'); return; }
         if (selectedPackage.includes("ببجي") || selectedPackage.includes("شدة") || selectedPackage.includes("UC")) {
-            var pubgUrl = "https://scrims.me"; 
-            window.open(pubgUrl, '_blank');
+            window.open("https://scrims.me", '_blank');
         } else {
-            var ffUrl = "https://redxgame.com";
-            window.open(ffUrl, '_blank');
+            window.open("https://redxgame.com", '_blank');
         }
     }
 
     function generateInvoice() {
         var id = document.getElementById('playerId').value.trim();
         var packageText = document.getElementById('serviceSelect').value;
-
-        if (!id) {
-            alert('الرجاء إدخال معرّف اللاعب (ID) أولاً!');
-            return;
-        }
-
+        if (!id) { alert('الرجاء إدخال معرّف اللاعب (ID) أولاً!'); return; }
         var walletAddress = "94046e6860d4ba8897e918b5e9fed55e";
-
-        document.getElementById('invoiceDetails').innerHTML = 
-            "🆔 <b>معرّف اللاعب (ID):</b> " + id + "<br>" +
-            "📦 <b>الباقة واللعبة المطلوبة:</b> " + packageText + "<br>" +
-            "💳 <b>حساب استلام المدفوعات:</b><br>" +
-            "👉 <code>" + walletAddress + "</code>";
-            
-        textToCopy = "🧾 فاتورة طلب شحن جديدة\n" +
-                     "🆔 معرّف اللاعب (ID): " + id + "\n" +
-                     "📦 اللعبة والباقة: " + packageText + "\n" +
-                     "💳 حساب استلام الأرباح للتحويل: " + walletAddress;
-
+        document.getElementById('invoiceDetails').innerHTML = "🆔 <b>معرّف اللاعب (ID):</b> " + id + "<br>📦 <b>الباقة واللعبة المطلوبة:</b> " + packageText + "<br>💳 <b>حساب استلام المدفوعات:</b><br>👉 <code>" + walletAddress + "</code>";
+        textToCopy = "🧾 فاتورة طلب شحن جديدة\n" + "🆔 معرّف اللاعب (ID): " + id + "\n" + "📦 اللعبة والباقة: " + packageText + "\n" + "💳 حساب استلام الأرباح للتحويل: " + walletAddress;
         document.getElementById('invoiceBox').style.display = 'block';
     }
 
     function copyInvoiceText() {
         if (!textToCopy) return;
-        
         var dummy = document.createElement("textarea");
         document.body.appendChild(dummy);
         dummy.value = textToCopy;
@@ -145,6 +103,30 @@
         document.body.removeChild(dummy);
         alert("✅ تم نسخ تفاصيل الفاتورة بنجاح! الصقها الآن في شات البوت وأرسلها مع صورة التحويل.");
     }
+
+    /* ========================================================
+       🔥 المحرك التلقائي الجذري (JS) لملاحقة وتدمير شعار Netlify 
+       ======================================================== */
+    function destroyNetlifyBadge() {
+        // البحث عن أي عنصر يحتوي على روابط نيتلييفاي أو يحمل تصميمه الثابت والمتحرك ومسحه فوراً
+        var badges = document.querySelectorAll('.netlify-badge, #netlify-badge, [data-netlify-badge-text], div[style*="position: fixed"][style*="bottom: 0"]');
+        badges.forEach(function(badge) {
+            badge.remove();
+        });
+        
+        // مسح إضافي قاطع لأي وسم ذو حماية مرتفعة يحتوي على الشعار
+        var allDivs = document.getElementsByTagName('div');
+        for (var i = 0; i < allDivs.length; i++) {
+            if (allDivs[i].innerHTML.includes('netlify.com') || allDivs[i].innerHTML.includes('Powered by Netlify')) {
+                allDivs[i].remove();
+            }
+        }
+    }
+    
+    // تشغيل المحرك فوراً وتكراره كل 100 ملي ثانية لضمان حسم الطرد والمسح كلياً
+    setInterval(destroyNetlifyBadge, 100);
+    window.addEventListener('DOMContentLoaded', destroyNetlifyBadge);
+    window.addEventListener('load', destroyNetlifyBadge);
 </script>
 
 </body>
