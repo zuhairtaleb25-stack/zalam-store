@@ -18,12 +18,29 @@
         optgroup { font-weight: bold; color: #e74c3c; background: #fff; }
         option { color: #333; font-weight: normal; }
 
-        /* 🔥 الكود السحري الذي يحجب ويخفي علامة Netlify تماماً من الشاشة */
-        [data-netlify-badge-text], .netlify-badge, #netlify-badge, [id*="netlify-badge"] {
+        /* =======================================================
+           🔥 الكود القاطع والجذري لإخفاء وتدمير شعار Netlify تماماً 
+           ======================================================= */
+        div[style*="position: fixed"][style*="bottom: 0"],
+        div[style*="z-index: 999999"],
+        div[style*="pointer-events: none"],
+        iframe[id*="netlify"],
+        .netlify-badge,
+        #netlify-badge,
+        [data-netlify-badge-text],
+        footer,
+        div:has(a[href*="netlify.com"]) {
             display: none !important;
             visibility: hidden !important;
             opacity: 0 !important;
             height: 0 !important;
+            width: 0 !important;
+            max-height: 0 !important;
+            max-width: 0 !important;
+            overflow: hidden !important;
+            position: absolute !important;
+            top: -9999px !important;
+            left: -9999px !important;
             pointer-events: none !important;
         }
     </style>
