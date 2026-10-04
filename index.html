@@ -6,36 +6,35 @@
     <title>ZALAM STORE</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0f172a; padding: 15px; margin: 0; text-align: center; color: #fff; user-select: none; }
-        .container { max-width: 420px; margin: auto; background: #1e293b; padding: 15px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); box-sizing: border-box; min-height: 550px; position: relative; }
+        .container { max-width: 420px; margin: auto; background: #1e293b; padding: 15px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); box-sizing: border-box; min-height: 550px; }
         
         /* 👑 بطاقة الرصيد والحساب الاحترافية العليا */
-        .user-card { background: linear-gradient(135deg, #e74c3c, #c0392b); border-radius: 12px; padding: 15px; text-align: right; margin-bottom: 20px; position: relative; }
+        .user-card { background: linear-gradient(135deg, #e74c3c, #c0392b); border-radius: 12px; padding: 15px; text-align: right; margin-bottom: 20px; }
         .user-badge { background: rgba(255,255,255,0.2); padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; display: inline-block; margin-bottom: 8px; }
         .balance-title { font-size: 13px; opacity: 0.9; margin: 0; }
         .balance-amount { font-size: 28px; font-weight: bold; margin: 5px 0; }
         .btn-deposit { background-color: #fff; color: #c0392b; border: none; padding: 8px 15px; border-radius: 8px; font-weight: bold; cursor: pointer; display: inline-block; text-decoration: none; margin-top: 5px; font-size: 13px; width: 100%; text-align: center; box-sizing: border-box; }
         
-        /* 🛠️ شريط التحكم العلوي وزر الرجوع المتنقل */
+        /* 🛠️ شريط التحكم العلوي وزر الرجوع المباشر */
         .store-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; padding-bottom: 10px; margin-bottom: 15px; min-height: 35px; }
-        .btn-back { display: none; background: none; border: none; color: #3498db; font-size: 14px; font-weight: bold; cursor: pointer; align-items: center; gap: 4px; padding: 0; }
+        .btn-back-link { background: none; border: none; color: #3498db; font-size: 14px; font-weight: bold; cursor: pointer; text-decoration: none; display: flex; align-items: center; gap: 4px; }
         .page-title { font-size: 16px; font-weight: bold; color: #f1f5f9; margin: 0; }
 
-        /* 📂 تصميم المجلدات الشبكية المنسقة */
+        /* 📂 تصميم المجلدات الشبكية المنسقة بالكامل للروابط */
         .grid-view { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-        .folder-card { background: #334155; padding: 25px 15px; border-radius: 12px; text-align: center; font-size: 13px; font-weight: bold; border: 1px solid #475569; cursor: pointer; transition: 0.2s; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; }
-        .folder-card:hover { border-color: #3498db; background: #232f3e; transform: translateY(-2px); }
+        .folder-link-card { background: #334155; padding: 25px 15px; border-radius: 12px; text-align: center; font-size: 13px; font-weight: bold; border: 1px solid #475569; cursor: pointer; transition: 0.2s; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; text-decoration: none; color: #fff; }
+        .folder-link-card:hover { border-color: #3498db; background: #232f3e; transform: translateY(-2px); }
         .folder-icon { font-size: 36px; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3)); }
         
-        /* 📦 بطاقات باقات الأسعار المفتوحة داخل كل لعبة منفردة */
-        .package-grid { display: none; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-        .package-card { background: #334155; border-radius: 12px; padding: 15px; border: 1px solid #475569; cursor: pointer; transition: 0.2s; text-align: center; }
-        .package-card:hover { border-color: #e74c3c; background: #232f3e; transform: translateY(-2px); }
+        /* 📦 بطاقات باقات الأسعار المفتوحة داخل كل لعبة */
+        .package-link-card { background: #334155; border-radius: 12px; padding: 15px; border: 1px solid #475569; cursor: pointer; transition: 0.2s; text-align: center; text-decoration: none; color: #fff; display: block; }
+        .package-link-card:hover { border-color: #e74c3c; background: #232f3e; transform: translateY(-2px); }
         .package-img-box { width: 45px; height: 45px; background: #1e293b; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 20px; margin: 0 auto 10px auto; border: 1px solid #475569; }
         .package-title { font-size: 13px; font-weight: bold; margin-bottom: 5px; color: #f8fafc; }
         .package-sub { font-size: 12px; color: #3498db; font-weight: bold; }
 
         /* 📝 شاشة تفاصيل طلب الشحن النهائية والأخيرة */
-        .purchase-screen { display: none; text-align: right; background: #1e293b; border-radius: 12px; box-sizing: border-box; }
+        .purchase-screen { text-align: right; background: #1e293b; border-radius: 12px; box-sizing: border-box; }
         .input-group { margin-bottom: 15px; text-align: right; }
         label { font-weight: bold; display: block; margin-bottom: 5px; font-size: 13px; color: #cbd5e1; }
         input { width: 100%; padding: 12px; border: 1px solid #475569; background: #334155; color: white; border-radius: 8px; box-sizing: border-box; font-size: 15px; }
@@ -61,92 +60,89 @@
         <button class="btn-deposit" onclick="alert('لشحن رصيد حسابك، يرجى التواصل مباشرة مع الإدارة لتفعيل التحويل المالي!')">➕ شحن الحساب الآن</button>
     </div>
 
-    <!-- 🛠️ شريط التحكم العلوي المتنقل مع زر الرجوع الذكي -->
-    <div class="store-header">
-        <button id="backBtn" class="btn-back" onclick="navigateBack()">◀ رجوع</button>
-        <span id="headerTitle" class="page-title">تصفح الأقسام</span>
-    </div>
-
-    <!-- 📂 المستوى الأول: المجلدات الرئيسية للمتجر -->
-    <div id="layer-main" class="grid-view" style="display: grid;">
-        <div class="folder-card" onclick="navigateToLayer('layer-games', 'شحن الألعاب')">
-            <span class="folder-icon">📁</span>
-            <span>شحن الألعاب</span>
+    <!-- ========================================================
+         📂 المستوى الأول: المجلدات الرئيسية للمتجر (شاشة البدء النظيفة)
+         ======================================================== -->
+    <div id="section-main">
+        <div class="store-header">
+            <span class="page-title">تصفح الأقسام</span>
         </div>
-        <div class="folder-card" onclick="alert('سيتم تفعيل قسم اشتراكات المشاهدة قريباً!')">
-            <span class="folder-icon">📁</span>
-            <span>اشتراكات المشاهدة</span>
-        </div>
-        <div class="folder-card" onclick="alert('سيتم تفعيل قسم بطاقات الدفع الإلكتروني قريباً!')">
-            <span class="folder-icon">📁</span>
-            <span>بطاقات الدفع الإلكتروني</span>
-        </div>
-        <div class="folder-card" onclick="alert('سيتم تفعيل قسم الذكاء الاصطناعي قريباً!')">
-            <span class="folder-icon">📁</span>
-            <span>الذكاء الاصطناعي</span>
-        </div>
-    </div>
-
-    <!-- 📂 المستوى الثاني: مجلدات الألعاب الفرعية النظيفة -->
-    <div id="layer-games" class="grid-view" style="display: none;">
-        <div class="folder-card" onclick="navigateToLayer('layer-freefire', 'فري فاير')">
-            <span class="folder-icon">📂</span>
-            <span>فري فاير</span>
-        </div>
-        <div class="folder-card" onclick="navigateToLayer('layer-pubg', 'بوبجي موبايل')">
-            <span class="folder-icon">📂</span>
-            <span>بوبجي موبايل</span>
-        </div>
-        <div class="folder-card" onclick="alert('سيتم توفير شحن يلا لودو قريباً!')">
-            <span class="folder-icon">📂</span>
-            <span>يلا لودو</span>
-        </div>
-        <div class="folder-card" onclick="alert('سيتم توفير شحن تربعـة قريباً!')">
-            <span class="folder-icon">📂</span>
-            <span>تربعـة</span>
+        <div class="grid-view">
+            <a href="#section-games" class="folder-link-card">
+                <span class="folder-icon">📁</span>
+                <span>شحن الألعاب</span>
+            </a>
+            <div class="folder-link-card" onclick="alert('سيتم تفعيل قسم اشتراكات المشاهدة قريباً!')">
+                <span class="folder-icon">📁</span>
+                <span>اشتراكات المشاهدة</span>
+            </div>
+            <div class="folder-link-card" onclick="alert('سيتم تفعيل قسم بطاقات الدفع الإلكتروني قريباً!')">
+                <span class="folder-icon">📁</span>
+                <span>بطاقات الدفع الإلكتروني</span>
+            </div>
+            <div class="folder-link-card" onclick="alert('سيتم تفعيل قسم الذكاء الاصطناعي قريباً!')">
+                <span class="folder-icon">📁</span>
+                <span>الذكاء الاصطناعي</span>
+            </div>
         </div>
     </div>
 
-    <!-- 📦 المستوى الثالث (أ): بطاقات باقات جواهر فري فاير المنفردة -->
-    <div id="layer-freefire" class="package-grid">
-        <div class="package-card" onclick="openPurchaseScreen('Diamonds 110', 1.50, 'FreeFire')">
-            <div class="package-img-box">💎</div>
-            <div class="package-title">Diamonds 110</div>
-            <div class="package-sub">حسب الكمية</div>
+    <!-- ========================================================
+         📂 المستوى الثاني: مجلدات الألعاب الفرعية المفتوحة بداخل شحن الألعاب
+         ======================================================== -->
+    <div id="section-games" style="margin-top: 40px; border-top: 2px dashed #334155; padding-top: 20px;">
+        <div class="store-header">
+            <a href="#section-main" class="btn-back-link">◀ العودة للأعلى</a>
+            <span class="page-title">🎮 شحن الألعاب</span>
         </div>
-        <div class="package-card" onclick="openPurchaseScreen('Diamonds 231', 2.80, 'FreeFire')">
-            <div class="package-img-box">💎</div>
-            <div class="package-title">Diamonds 231</div>
-            <div class="package-sub">حسب الكمية</div>
-        </div>
-        <div class="package-card" onclick="openPurchaseScreen('Diamonds 583', 6.00, 'FreeFire')">
-            <div class="package-img-box">💎</div>
-            <div class="package-title">Diamonds 583</div>
-            <div class="package-sub">حسب الكمية</div>
-        </div>
-        <div class="package-card" onclick="openPurchaseScreen('Diamonds 1188', 11.50, 'FreeFire')">
-            <div class="package-img-box">💎</div>
-            <div class="package-title">Diamonds 1188</div>
-            <div class="package-sub">حسب الكمية</div>
+        <div class="grid-view">
+            <a href="#section-freefire" class="folder-link-card">
+                <span class="folder-icon">📂</span>
+                <span>فري فاير</span>
+            </a>
+            <a href="#section-pubg" class="folder-link-card">
+                <span class="folder-icon">📂</span>
+                <span>بوبجي موبايل</span>
+            </a>
+            <div class="folder-link-card" onclick="alert('سيتم توفير شحن يلا لودو قريباً!')">
+                <span class="folder-icon">📂</span>
+                <span>يلا لودو</span>
+            </div>
+            <div class="folder-link-card" onclick="alert('سيتم توفير شحن تربعـة قريباً!')">
+                <span class="folder-icon">📂</span>
+                <span>تربعـة</span>
+            </div>
         </div>
     </div>
 
-    <!-- 📦 المستوى الثالث (ب): بطاقات باقات شدات ببجي موبايل المنفردة -->
-    <div id="layer-pubg" class="package-grid">
-        <div class="package-card" onclick="openPurchaseScreen('60UC', 1.30, 'PUBG')">
-            <div class="package-img-box">🪙</div>
-            <div class="package-title">60UC</div>
-            <div class="package-sub">حسب الكمية</div>
+    <!-- ========================================================
+         📦 المستوى الثالث (أ): بطاقات باقات جواهر فري فاير المنفردة
+         ======================================================== -->
+    <div id="section-freefire" style="margin-top: 40px; border-top: 2px dashed #334155; padding-top: 20px;">
+        <div class="store-header">
+            <a href="#section-games" class="btn-back-link">◀ رجوع للألعاب</a>
+            <span class="page-title">🔥 فري فاير</span>
         </div>
-        <div class="package-card" onclick="openPurchaseScreen('325UC', 5.20, 'PUBG')">
-            <div class="package-img-box">🪙</div>
-            <div class="package-title">325UC</div>
-            <div class="package-sub">حسب الكمية</div>
+        <div class="grid-view">
+            <a href="#section-purchase" class="package-link-card" onclick="setProductData('Diamonds 110', 1.50, 'FreeFire')">
+                <div class="package-img-box">💎</div>
+                <div class="package-title">Diamonds 110</div>
+                <div class="package-sub">حسب الكمية</div>
+            </a>
+            <a href="#section-purchase" class="package-link-card" onclick="setProductData('Diamonds 231', 2.80, 'FreeFire')">
+                <div class="package-img-box">💎</div>
+                <div class="package-title">Diamonds 231</div>
+                <div class="package-sub">حسب الكمية</div>
+            </a>
+            <a href="#section-purchase" class="package-link-card" onclick="setProductData('Diamonds 583', 6.00, 'FreeFire')">
+                <div class="package-img-box">💎</div>
+                <div class="package-title">Diamonds 583</div>
+                <div class="package-sub">حسب الكمية</div>
+            </a>
+            <a href="#section-purchase" class="package-link-card" onclick="setProductData('Diamonds 1188', 11.50, 'FreeFire')">
+                <div class="package-img-box">💎</div>
+                <div class="package-title">Diamonds 1188</div>
+                <div class="package-sub">حسب الكمية</div>
+            </a>
         </div>
-        <div class="package-card" onclick="openPurchaseScreen('660UC', 9.90, 'PUBG')">
-            <div class="package-img-box">🪙</div>
-            <div class="package-title">660UC</div>
-            <div class="package-sub">حسب الكمية</div>
-        </div>
-        <div class="package-card" onclick="openPurchaseScreen('1800UC', 24.50, 'PUBG')">
-            <div class="package-img-box">🪙</div>
+    </div>
