@@ -66,7 +66,7 @@
     <div class="grid-categories">
         <div class="category-item" onclick="alert('أنت تتصفح قسم الألعاب الشائع بالأسفل، اختر لعبتك المفضلة لشحنها!')">
             <span class="category-icon">🎮</span>
-            <span>قسم الألعاب الشائع</span>
+            <span>...قسم الألعاب الشائع</span>
         </div>
         <div class="category-item" onclick="alert('سيتم تفعيل قسم شحن الرصيد والخطوط قريباً!')">
             <span class="category-icon">📱</span>
@@ -105,7 +105,7 @@
 
 </div>
 
-<!-- 🚨 النافذة المنبثقة الذكية (المخفية بالكامل ولا تظهر إلا عند الضغط بطلبك) -->
+<!-- 🚨 النافذة المنبثقة الذكية المصلحة برمجياً للعمل فوراً -->
 <div id="chargingModal" class="modal-overlay">
     <div class="modal-content">
         <div class="modal-header">
@@ -122,8 +122,8 @@
         <div class="input-group">
             <label for="serviceSelect">اختر باقة الشحن الرقمية المحددة:</label>
             <select id="serviceSelect">
-                <!-- المجموعات تتبدل تلقائياً بالجافا سكريبت حسب خيار المستخدم -->
-                <option id="optGroupContainer"></option>
+                <!-- الباقات المصلحة بالكامل هنا -->
+                <option value="">اختر الباقة...</option>
             </select>
         </div>
 
@@ -144,11 +144,14 @@
     var textToCopy = ""; 
     var activeGame = "";
 
-    // دالة فتح النافذة المنبثقة وحقن باقات اللعبة المحددة بذكاء لإنهاء الفوضى القديمة
+    // إصلاح كود الحقن بنسبة 100% لإظهار الباقات والقوائم بدون أي تعليق
     function openChargingModal(gameType) {
         activeGame = gameType;
         var modal = document.getElementById('chargingModal');
         var title = document.getElementById('modalGameTitle');
         var select = document.getElementById('serviceSelect');
         
-        // تنظيف صندوق الفاتورة القديم وإعادة ضبط المدخلات عند فتح نافذة جديدة
+        document.getElementById('playerId').value = "";
+        document.getElementById('invoiceBox').style.display = 'none';
+        
+        if (gameType === 'FreeFire') {
