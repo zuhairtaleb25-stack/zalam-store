@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجر زلام لشحن الألعاب الرقمية</title>
+    <title>ZALAM STORE</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; padding: 15px; margin: 0; text-align: center; color: #333; }
         .container { max-width: 400px; margin: auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
@@ -17,21 +17,13 @@
         .invoice-box { display: none; background: #fff3cd; border: 1px solid #ffeeba; padding: 15px; border-radius: 8px; margin-top: 15px; text-align: right; font-size: 14px; }
         optgroup { font-weight: bold; color: #e74c3c; background: #fff; }
         option { color: #333; font-weight: normal; }
-
-        /* جدار حماية إضافي عبر التصميم لحجب أي عناصر معزولة */
-        nf-badge, .netlify-badge, #netlify-badge, [data-netlify-badge-text], div[style*="position: fixed"][style*="bottom: 0"] {
-            display: none !important;
-            visibility: hidden !important;
-            opacity: 0 !important;
-            height: 0 !important;
-            width: 0 !important;
-        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>🎮 متجر زلام لشحن الألعاب المباشر</h2>
+    <!-- 🔥 تم تعديل العنوان للأبد بناءً على طلبك ليصبح بالإنجليزي الفخم -->
+    <h2>🎮 ZALAM STORE</h2>
     <p>أدخل معرّف اللاعب (ID) واختر باقة اللعبة المفضلة لديك</p>
 
     <div class="input-group">
@@ -105,38 +97,6 @@
         document.body.removeChild(dummy);
         alert("✅ تم نسخ تفاصيل الفاتورة بنجاح! الصقها الآن في شات البوت وأرسلها مع صورة التحويل.");
     }
-
-    /* =========================================================================
-       🔥 كود التدمير الشامل والقاطع (JS) لاختراق الـ Shadow DOM وإخفاء الشعار تماماً 
-       ========================================================================= */
-    function destroyNetlifyElements() {
-        // 1. تدمير الشعار العادي من الـ DOM الرئيسي
-        var normalBadges = document.querySelectorAll('.netlify-badge, #netlify-badge, [data-netlify-badge-text], nf-badge, div[style*="position: fixed"][style*="bottom: 0"]');
-        normalBadges.forEach(function(el) { el.remove(); });
-
-        // 2. اختراق الـ Shadow DOM المخصص من نيتلييفاي ومسح محتوياته داخلياً
-        var allElements = document.querySelectorAll('*');
-        allElements.forEach(function(el) {
-            if (el.shadowRoot) {
-                // إذا وجد الكود جدار حماية مغلق، يقوم باختراقه والبحث عن الشعار بالداخل وتدميره
-                var shadowBadges = el.shadowRoot.querySelectorAll('.netlify-badge, #netlify-badge, [data-netlify-badge-text], nf-badge, div[style*="bottom: 0"]');
-                shadowBadges.forEach(function(sb) { sb.remove(); });
-                
-                // تصفير حجم أي حاوية متبقية داخل الجدار المعزول لتموت تماماً من الشاشة
-                var innerContainer = el.shadowRoot.querySelector('div');
-                if (innerContainer && (innerContainer.innerHTML.includes('netlify') || innerContainer.innerHTML.includes('Powered by'))) {
-                    innerContainer.style.display = 'none';
-                    innerContainer.style.height = '0';
-                    innerContainer.remove();
-                }
-            }
-        });
-    }
-
-    // تشغيل محرك الفحص والاختراق فورا وتكراره كل 50 ملي ثانية لضمان الطرد النهائي
-    setInterval(destroyNetlifyElements, 50);
-    window.addEventListener('DOMContentLoaded', destroyNetlifyElements);
-    window.addEventListener('load', destroyNetlifyElements);
 </script>
 
 </body>
