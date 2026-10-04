@@ -30,13 +30,8 @@
         .game-avatar:hover { transform: scale(1.05); background: #475569; }
         .game-name { font-size: 12px; font-weight: bold; white-space: nowrap; }
 
-        /* 🚨 النافذة المنبثقة الذكية المخفية (Popup Modal) */
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center; padding: 20px; box-sizing: border-box; }
-        .modal-content { background: #1e293b; width: 100%; max-width: 380px; border-radius: 16px; padding: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); position: relative; border: 1px solid #475569; box-sizing: border-box; text-align: right; }
-        .modal-header { font-size: 18px; font-weight: bold; color: #e74c3c; margin-bottom: 15px; border-bottom: 1px solid #334155; padding-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-        .btn-close-modal { background: none; border: none; color: #cbd5e1; font-size: 22px; cursor: pointer; }
-        
-        /* تفاصيل نموذج الشحن المكتوم داخل النافذة */
+        /* 🚨 تفاصيل نموذج الشحن المطور (أصبح يظهر وينقفل مباشرة وسهل جداً للزبائن) */
+        .charging-panel { display: none; background: #1e293b; border-radius: 12px; padding: 15px; margin-top: 15px; border: 1px solid #475569; text-align: right; box-sizing: border-box; }
         .input-group { margin-bottom: 15px; text-align: right; }
         label { font-weight: bold; display: block; margin-bottom: 5px; font-size: 14px; color: #cbd5e1; }
         input, select { width: 100%; padding: 12px; border: 1px solid #475569; background: #334155; color: white; border-radius: 8px; box-sizing: border-box; font-size: 15px; }
@@ -61,7 +56,7 @@
         <button class="btn-deposit" onclick="alert('لشحن رصيد حسابك، يرجى التواصل مباشرة مع الإدارة لتفعيل التحويل المالي!')">➕ شحن الحساب الآن</button>
     </div>
 
-    <!-- 📊 الأقسام الرئيسية للمتجر (أصبحت كمجلدات مظهر نظيف) -->
+    <!-- 📊 الأقسام الرئيسية للمتجر -->
     <div class="section-title">أقسام المتجر الرئيسية</div>
     <div class="grid-categories">
         <div class="category-item" onclick="alert('أنت تتصفح قسم الألعاب الشائع بالأسفل، اختر لعبتك المفضلة لشحنها!')">
@@ -82,14 +77,14 @@
         </div>
     </div>
 
-    <!-- 🎮 قائمة الألعاب الدائرية السريعة (تفتح النوافذ بذكاء) -->
+    <!-- 🎮 قائمة الألعاب الدائرية السريعة -->
     <div class="section-title">الأقسام الفرعية (اختر لعبتك للشحن)</div>
     <div class="games-list">
-        <div class="game-circle" onclick="openChargingModal('FreeFire')">
+        <div class="game-circle" onclick="showGamePanel('FreeFire')">
             <div class="game-avatar">💎</div>
             <div class="game-name">فري فاير</div>
         </div>
-        <div class="game-circle" onclick="openChargingModal('PUBG')">
+        <div class="game-circle" onclick="showGamePanel('PUBG')">
             <div class="game-avatar">🪙</div>
             <div class="game-name">ببجي موبايل</div>
         </div>
@@ -103,15 +98,9 @@
         </div>
     </div>
 
-</div>
-
-<!-- 🚨 النافذة المنبثقة الذكية المصلحة برمجياً للعمل فوراً -->
-<div id="chargingModal" class="modal-overlay">
-    <div class="modal-content">
-        <div class="modal-header">
-            <span id="modalGameTitle">تفاصيل طلب الشحن</span>
-            <button class="btn-close-modal" onclick="closeChargingModal()">✕</button>
-        </div>
+    <!-- 🚨 لوحة الشحن التفاعلية الذكية والمباشرة (تفتح بسلاسة وتتغير تلقائياً حسب اللعبة المطلوبة) -->
+    <div id="chargingPanel" class="charging-panel">
+        <div style="font-size: 16px; font-weight: bold; color: #e74c3c; margin-bottom: 15px; border-bottom: 1px solid #334155; padding-bottom: 8px;" id="panelTitle">تفاصيل طلب الشحن المباشر</div>
         
         <div class="input-group">
             <label for="playerId">معرّف اللاعب الحقيقي (Player ID):</label>
@@ -122,8 +111,7 @@
         <div class="input-group">
             <label for="serviceSelect">اختر باقة الشحن الرقمية المحددة:</label>
             <select id="serviceSelect">
-                <!-- الباقات المصلحة بالكامل هنا -->
-                <option value="">اختر الباقة...</option>
+                <!-- يتم تعبئتها ديناميكياً برمجياً -->
             </select>
         </div>
 
@@ -138,20 +126,32 @@
             <p style="color:#c0392b; font-weight:bold; text-align:center; font-size: 11px; margin:0;">⚠️ اضغط على زر النسخ الأخضر، وأرسل النص في البوت مع صورة الإيصال ليتم الشحن فوراً!</p>
         </div>
     </div>
+
 </div>
 
 <script>
     var textToCopy = ""; 
-    var activeGame = "";
+    var selectedGameType = "";
 
-    // إصلاح كود الحقن بنسبة 100% لإظهار الباقات والقوائم بدون أي تعليق
-    function openChargingModal(gameType) {
-        activeGame = gameType;
-        var modal = document.getElementById('chargingModal');
-        var title = document.getElementById('modalGameTitle');
+    // دالة فتح وإظهار الخانات والأسعار بشكل فوري وقاطع لإنهاء التعليق نهائياً
+    function showGamePanel(gameType) {
+        selectedGameType = gameType;
+        var panel = document.getElementById('chargingPanel');
+        var title = document.getElementById('panelTitle');
         var select = document.getElementById('serviceSelect');
         
+        // مسح أي فاتورة قديمة لتجنب الخلط
         document.getElementById('playerId').value = "";
         document.getElementById('invoiceBox').style.display = 'none';
         
         if (gameType === 'FreeFire') {
+            title.innerText = "🔥 باقات شحن فري فاير (Free Fire)";
+            select.innerHTML = `
+                <option value="💎 110 جواهر فري فاير بسعر 1.50$ 🟢">💎 110 جوهرة ($1.50)</option>
+                <option value="💎 231 جواهر فري فاير بسعر 2.80$ 🟢">💎 231 جوهرة ($2.80)</option>
+                <option value="💎 583 جواهر فري فاير بسعر 6.00$ 🟢">💎 583 جوهرة ($6.00)</option>
+                <option value="💎 1188 جواهر فري فاير بسعر 11.50$ 🟢">💎 1188 جوهرة ($11.50)</option>
+            `;
+        } else if (gameType === 'PUBG') {
+            title.innerText = "🎯 باقات شحن ببجي موبايل (PUBG UC)";
+            select.innerHTML = `
